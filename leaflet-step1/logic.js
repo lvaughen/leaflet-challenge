@@ -70,31 +70,31 @@ d3.json(queryUrl, function (data) {
 
   // Add Legend to map from this reference https://gis.stackexchange.com/questions/133630/adding-leaflet-legend, https://leafletjs.com/examples/choropleth/#custom-legend-control
 
-  function getColor(i){
+  function getColor(i) {
     return i > 5 ? "#E74C3C" :
-    i > 2  ? "#CA6F1E" :
-    i > 1  ? "#F4D03F" :
-             "#D7DBDD";
+      i > 2 ? "#CA6F1E" :
+        i > 1 ? "#F4D03F" :
+          "#D7DBDD";
   }
-  
-  
-  
-  var legend = L.control({ position: 'bottomright' });
-  legend.onAdd = function (myMap) {
 
-    var div = L.DomUtil.create('div', 'info legend'),
-    grades = [0, 1, 2, 5],
-    labels = [];
-  
+
+
+  var legend = L.control({ position: 'bottomright' });
+
+
+  legend.onAdd = function () {
+
+    var div = L.DomUtil.create('div', 'info legend');
+    var grades = [0, 1, 2, 5];
+    // labels = ["EQ Magnitue", "Color"];
+    var colors = ["#D7DBDD", "#F4D03F", "#CA6F1E", "#E74C3C"];
+
     // grades = ['EQ Magnitude > 5.0', 'EQ Magnitude > 2.0', 'EQ Magnitude > 1.0', 'EQ Magnitude <= 1.0'];
 
     for (var i = 0; i < grades.length; i++) {
-
-      div.innerHTML +=
-      '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-      grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+      div.innerHTML += "<i style='background: " + colors[i] + "'></i> " +
+        grades[i] + (grades[i + 1] ? "&ndash;" + grades[i + 1] + "<br>" : "+");
     }
-
     return div;
   };
 
