@@ -13,7 +13,7 @@ L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
   accessToken: API_KEY
 }).addTo(myMap);
 
-// Store our API endpoint inside queryUrl
+// Store our API endpoint inside queryUrl, the link is for all week geojson
 var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 
 // Perform a GET request to the query URL
@@ -21,8 +21,7 @@ d3.json(queryUrl, function (data) {
   // Once we get a response, send the data.features object to the createFeatures function
   // console.log(data.features);
 
-  var locations = [];
-  var mag = [];
+
 
   // Loop through the cities array and create one marker for each city object
   for (var i = 0; i < data.features.length; i++) {
@@ -84,9 +83,9 @@ d3.json(queryUrl, function (data) {
 
   legend.onAdd = function () {
 
-    var div = L.DomUtil.create('div', 'info legend');
-    var grades = [0, 1, 2, 5];
-    // labels = ["EQ Magnitue", "Color"];
+    var div = L.DomUtil.create('div', 'info legend'),
+    grades = [0, 1, 2, 5],
+    labels = ["EQ Magnitue", "Color"];
     var colors = ["#D7DBDD", "#F4D03F", "#CA6F1E", "#E74C3C"];
 
     // grades = ['EQ Magnitude > 5.0', 'EQ Magnitude > 2.0', 'EQ Magnitude > 1.0', 'EQ Magnitude <= 1.0'];

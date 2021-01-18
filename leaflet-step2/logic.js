@@ -40,7 +40,7 @@ var dark_map = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/
 // Allow background maps to be selectable base_layers
 
 var base_layers = {
-  
+
   Satellite: satellite_map,
   Light: light_map,
   Dark: dark_map,
@@ -133,35 +133,56 @@ d3.json(queryUrl, function (data) {
 //  Get data for plate information from downloaded file
 var queryUrl2 = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json";
 
-// Perform a GET request to the query URL
 var plates_data = d3.json(queryUrl2, function (data) {
+  
+  var plates_layer = L.geoJSON(data, {
+          fillOpacity: 0.75,
+          color: "blue",
+          weight: 1,
+          dashArray: '5,5,1,5'
+    
+        }).addTo(plate_lines);
+    
 
-  // console.log(data.features);
 
-  // Loop through the features for each plate line
-  for (var i = 0; i < data.features.length; i++) {
 
-    console.log(data.features[i].geometry.coordinates)
-
-    // // fix geometry.coordinates
-    // var lat = data.features[i].geometry.coordinates[1]
-    // var long = data.features[i].geometry.coordinates[0]
-
-    // data.features[i].geometry.coordinates[0] = lat;
-    // data.features[i].geometry.coordinates[1] = long;
-
-    // Add liness to plate layer and make accessible outside of function
-    var plates_layer = L.polyline(data.features[i].geometry.coordinates, {
-      fillOpacity: 0.75,
-      color: "blue",
-      weight: 1,
-      dashArray: '5,5,1,5'
-
-    }).addTo(plate_lines);
-
-  }
 
 });
+
+
+
+// // Perform a GET request to the query URL
+// var plates_data = d3.json(queryUrl2, function (data) {
+
+//   // console.log(data.features);
+
+//   // Loop through the features for each plate line
+//   for (var i = 0; i < data.features.length; i++) {
+
+//     console.log(data.features[i].geometry.coordinates)
+
+//     // // fix geometry.coordinates
+//     // for (var x = 0; x < data.features[i].geometry.length; x++) {
+
+//     //   var lat = data.features[i].geometry[x].coordinates[1]
+//     //   var long = data.features[i].geometry[x].coordinates[0]
+
+//     //   data.features[i].geometry[x].coordinates[0] = lat;
+//     //   data.features[i].geometry[x].coordinates[1] = long;
+//     // }
+
+//     // Add liness to plate layer and make accessible outside of function
+//     var plates_layer = L.geoJSON(data.features[i].geometry.coordinates, {
+//       fillOpacity: 0.75,
+//       color: "blue",
+//       weight: 1,
+//       dashArray: '5,5,1,5'
+
+//     }).addTo(plate_lines);
+
+//   }
+
+// });
 
 
 
