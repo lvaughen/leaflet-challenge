@@ -134,103 +134,44 @@ d3.json(queryUrl, function (data) {
 var queryUrl2 = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json";
 
 var plates_data = d3.json(queryUrl2, function (data) {
-  
+
   var plates_layer = L.geoJSON(data, {
-          fillOpacity: 0.75,
-          color: "blue",
-          weight: 1,
-          dashArray: '5,5,1,5'
-    
-        }).addTo(plate_lines);
-    
+    fillOpacity: 0.75,
+    color: "blue",
+    weight: 1,
+    dashArray: '5,5,1,5'
 
-
-
+  }).addTo(plate_lines);
 
 });
 
 
+var legend = L.control({ position: 'bottomright' });
 
-// // Perform a GET request to the query URL
-// var plates_data = d3.json(queryUrl2, function (data) {
 
-//   // console.log(data.features);
+legend.onAdd = function () {
 
-//   // Loop through the features for each plate line
-//   for (var i = 0; i < data.features.length; i++) {
+  var div = L.DomUtil.create('div', 'info legend'),
+    grades = [0, 1, 2, 5],
+    colors = ["#D7DBDD", "#F4D03F", "#FFA500", "#FF0000"];
 
-//     console.log(data.features[i].geometry.coordinates)
+  div.innerHTML = "<H3>Legend</H3>" + "<h4> Color - EQ Mag </h4>"
 
-//     // // fix geometry.coordinates
-//     // for (var x = 0; x < data.features[i].geometry.length; x++) {
+  for (var i = 0; i < grades.length; i++) {
 
-//     //   var lat = data.features[i].geometry[x].coordinates[1]
-//     //   var long = data.features[i].geometry[x].coordinates[0]
+    div.innerHTML +=
+      '<i  style="background:' + colors[i] + '"></i> ' + "&nbsp;&nbsp;&nbsp;&nbsp;" +
+      grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
 
-//     //   data.features[i].geometry[x].coordinates[0] = lat;
-//     //   data.features[i].geometry[x].coordinates[1] = long;
-//     // }
+    console.log(i, colors[grades[i]]);
+  }
 
-//     // Add liness to plate layer and make accessible outside of function
-//     var plates_layer = L.geoJSON(data.features[i].geometry.coordinates, {
-//       fillOpacity: 0.75,
-//       color: "blue",
-//       weight: 1,
-//       dashArray: '5,5,1,5'
+  return div;
+};
 
-//     }).addTo(plate_lines);
-
-//   }
-
-// });
+legend.addTo(myMap);
 
 
 
 
-//   // Add Legend to map from this reference https://gis.stackexchange.com/questions/133630/adding-leaflet-legend, https://leafletjs.com/examples/choropleth/#custom-legend-control
 
-//   function getColor(i){
-//     return i > 5 ? "#E74C3C" :
-//     i > 2  ? "#CA6F1E" :
-//     i > 1  ? "#F4D03F" :
-//              "#D7DBDD";
-//   }
-
-//   // Create a map object
-// var myMap = L.map("map", {
-//     center: [37, -120],
-//     zoom: 4
-//   });
-
-//   L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
-//     attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
-//     tileSize: 512,
-//     maxZoom: 18,
-//     zoomOffset: -1,
-//     id: "mapbox/streets-v11",
-//     accessToken: API_KEY
-//   }).addTo(myMap);
-
-//   var legend = L.control({ position: 'bottomright' });
-//   legend.onAdd = function (myMap) {
-
-//     var div = L.DomUtil.create('div', 'info legend'),
-//     grades = [0, 1, 2, 5],
-//     labels = [];
-
-//     // grades = ['EQ Magnitude > 5.0', 'EQ Magnitude > 2.0', 'EQ Magnitude > 1.0', 'EQ Magnitude <= 1.0'];
-
-//     for (var i = 0; i < grades.length; i++) {
-
-//       div.innerHTML +=
-//       '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-//       grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
-//     }
-
-//     return div;
-//   };
-
-//   legend.addTo(myMap);
-
-
-// });

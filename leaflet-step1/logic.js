@@ -52,7 +52,7 @@ d3.json(queryUrl, function (data) {
     data.features[i].geometry.coordinates[0] = lat;
     data.features[i].geometry.coordinates[1] = long;
 
-    console.log(data.features[i].geometry.coordinates)
+    // console.log(data.features[i].geometry.coordinates)
 
     // console.log(color)
 
@@ -84,20 +84,25 @@ d3.json(queryUrl, function (data) {
   legend.onAdd = function () {
 
     var div = L.DomUtil.create('div', 'info legend'),
-    grades = [0, 1, 2, 5],
-    labels = ["EQ Magnitue", "Color"];
-    var colors = ["#D7DBDD", "#F4D03F", "#CA6F1E", "#E74C3C"];
+      grades = [0, 1, 2, 5],
+      colors = ["#D7DBDD", "#F4D03F", "#FFA500", "#FF0000"];
 
-    // grades = ['EQ Magnitude > 5.0', 'EQ Magnitude > 2.0', 'EQ Magnitude > 1.0', 'EQ Magnitude <= 1.0'];
+    div.innerHTML = "<H3>Legend</H3>" + "<h4> Color - EQ Mag </h4>"
 
     for (var i = 0; i < grades.length; i++) {
-      div.innerHTML += "<i style='background: " + colors[i] + "'></i> " +
-        grades[i] + (grades[i + 1] ? "&ndash;" + grades[i + 1] + "<br>" : "+");
+
+      div.innerHTML +=
+        '<i  style="background:' + colors[i] + '"></i> ' + "&nbsp;&nbsp;&nbsp;&nbsp;"+
+        grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+
+        console.log(i, colors[grades[i]]);
     }
+
     return div;
   };
 
   legend.addTo(myMap);
+
 
 
 });
